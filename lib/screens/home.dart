@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:smarthome/drawer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smarthome/utils/drawer.dart';
+import 'package:smarthome/utils/grid_view.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,6 +16,29 @@ class _HomeState extends State<Home> {
   bool isTemperatureOn = false;
   bool isLightsOn = false;
   bool isPersonWalkingOn = false;
+  int totalScenario = 0;
+  List<String> scenario = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getScenario();
+  }
+
+  getScenario() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    totalScenario = prefs.getInt('total') ?? 0;
+
+    for (int i = 0; i < totalScenario; i++) {
+      String? data = prefs.getString(i.toString());
+
+      if (data != '0') {
+        scenario.add(data!);
+      }
+    }
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -280,6 +305,24 @@ class _HomeState extends State<Home> {
                   color: Colors.grey,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              (totalScenario == 0)
+                  ? Center(
+                      child: Text(
+                        'Tidak ada skenario',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                        ),
+                      ),
+                    )
+                  : GridViewWidget(
+                      totalScenario: totalScenario,
+                      scenario: scenario,
+                    )
             ],
           ),
         ),
