@@ -53,7 +53,7 @@ class _ProfileState extends State<Profile> {
                   CircleAvatar(
                     radius: 50,
                     backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'),
+                        'https://images.unsplash.com/photo-1577880216142-8549e9488dad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
                   ),
                   SizedBox(
                     height: 16,
@@ -101,29 +101,32 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 16,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.notifications_active,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Text(
-                          'Notification',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                    Icon(
-                      Icons.navigate_next,
-                      color: Colors.grey,
-                    ),
-                  ],
+                InkWell(
+                  onTap: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.notifications_active,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          Text(
+                            'Notification',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.navigate_next,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
                 ),
                 Divider(
                   color: Colors.grey,
@@ -132,29 +135,32 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 16,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.logout_rounded,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Text(
-                          'Logout',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                    Icon(
-                      Icons.navigate_next,
-                      color: Colors.grey,
-                    ),
-                  ],
+                InkWell(
+                  onTap: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.logout_rounded,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          Text(
+                            'Logout',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.navigate_next,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
                 ),
                 Divider(
                   color: Colors.grey,

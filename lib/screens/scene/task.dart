@@ -1,66 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
-import 'package:smarthome/drawer.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Task extends StatefulWidget {
+  const Task({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Task> createState() => _TaskState();
 }
 
-class _HomeState extends State<Home> {
+class _TaskState extends State<Task> {
   bool isTemperatureOn = false;
-  bool isLightsOn = false;
-  bool isPersonWalkingOn = false;
+  bool isLDROn = false;
+  bool isUltrasonicOn = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[200],
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
         elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(
-            top: 16,
-          ),
-          child: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () => DrawerNavigation(),
-            color: Colors.grey,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Padding(
+            padding: const EdgeInsets.only(
+              left: 16,
+              top: 16,
+            ),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+              size: 35,
+            ),
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 16,
-            ),
-            child: SvgPicture.asset(
-              'assets/icons/icon_feather_bell.svg',
-              color: Colors.grey,
-              height: 30,
-              width: 30,
-            ),
-          ),
-          SizedBox(
-            width: 16,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 16,
-            ),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://images.unsplash.com/photo-1577880216142-8549e9488dad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
-            ),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -70,21 +44,9 @@ class _HomeState extends State<Home> {
             right: 16,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                showDateTimeNow(),
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Smart Home System',
+                'Melaksanakan Tugas',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -92,10 +54,10 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 16,
               ),
               Text(
-                'DEVICES',
+                'on/off Tugas',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
@@ -114,7 +76,10 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 20,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -143,16 +108,11 @@ class _HomeState extends State<Home> {
                               height: 16,
                             ),
                             Text(
-                              'Temperature',
+                              'Sensor Suhu',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
+                                fontSize: 16,
                                 color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              '20°C',
-                              style: TextStyle(
-                                color: Colors.grey,
                               ),
                             ),
                           ],
@@ -168,7 +128,10 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 20,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -182,10 +145,10 @@ class _HomeState extends State<Home> {
                                   width: 40,
                                 ),
                                 Switch(
-                                  value: isLightsOn,
+                                  value: isLDROn,
                                   onChanged: (value) {
                                     setState(() {
-                                      isLightsOn = value;
+                                      isLDROn = value;
                                     });
                                   },
                                   activeTrackColor: Colors.blueAccent,
@@ -197,16 +160,11 @@ class _HomeState extends State<Home> {
                               height: 16,
                             ),
                             Text(
-                              'Lights',
+                              'Sensor LDR',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              'Living Room',
-                              style: TextStyle(
-                                color: Colors.grey,
+                                fontSize: 16,
                               ),
                             ),
                           ],
@@ -225,42 +183,39 @@ class _HomeState extends State<Home> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 30,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SvgPicture.asset(
-                        'assets/icons/person_walking.svg',
-                        color: Colors.blue,
-                        height: 80,
-                        width: 60,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
+                          SvgPicture.asset(
+                            'assets/icons/led_lamp.svg',
+                            color: Colors.blue,
+                            height: 55,
+                            width: 55,
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
                           Text(
-                            'Person Walking',
+                            'Sensor Ultrasonik',
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            'Detected',
-                            style: TextStyle(
-                              color: Colors.grey,
+                              fontSize: 16,
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 16,
-                      ),
                       Switch(
-                        value: isPersonWalkingOn,
+                        value: isUltrasonicOn,
                         onChanged: (value) {
                           setState(() {
-                            isPersonWalkingOn = value;
+                            isUltrasonicOn = value;
                           });
                         },
                         activeTrackColor: Colors.blueAccent,
@@ -270,26 +225,10 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'SKENARIO',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey,
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  String showDateTimeNow() {
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('dd MMMM yyyy').format(now);
-    return formattedDate;
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:smarthome/screens/add_new_scene.dart';
 import 'package:smarthome/screens/home.dart';
 import 'package:smarthome/screens/profile.dart';
-import 'package:smarthome/screens/scenario.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _HomepageState extends State<Homepage> {
 
   final tabs = [
     Home(),
-    Scenario(),
+    AddNewScene(),
     Profile(),
   ];
 

@@ -15,15 +15,30 @@ class _ScenarioState extends State<Scenario> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+        backgroundColor: Colors.grey[200],
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: Padding(
+            padding: const EdgeInsets.only(
+              left: 16,
+              top: 16,
+            ),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+              size: 35,
+            ),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 50,
-              ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 child: Text(
@@ -37,13 +52,18 @@ class _ScenarioState extends State<Scenario> {
                 ),
               ),
               SizedBox(
-                height: 50,
+                height: 30,
               ),
-              Text(
-                'Skenario',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey,
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                ),
+                child: Text(
+                  'Skenario',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
               SizedBox(
