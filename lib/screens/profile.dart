@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -136,7 +137,9 @@ class _ProfileState extends State<Profile> {
                   height: 16,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    SystemNavigator.pop();
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

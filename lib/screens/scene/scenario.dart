@@ -154,78 +154,10 @@ class _ScenarioState extends State<Scenario> {
               SizedBox(
                 height: 30,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 50,
-                child: RaisedButton(
-                  onPressed: () {
-                    _showConfirmDeleteDialog();
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      26,
-                    ),
-                  ),
-                  color: Colors.white,
-                  child: Text(
-                    'Hapus Semua Skenario',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> _showConfirmDeleteDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Konfirmasi Menghapus Skenario'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Apakah anda yakin ingin menghapus seluruh skenario ?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('YA'),
-              onPressed: () async {
-                SharedPreferences pref = await SharedPreferences.getInstance();
-                await pref.clear();
-                Navigator.of(context).pop();
-
-                final snackBar = SnackBar(
-                  content: const Text('Sukses menghapus skenario'),
-                  action: SnackBarAction(
-                    label: 'Oke',
-                    onPressed: () {
-                      // Some code to undo the change.
-                    },
-                  ),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              },
-            ),
-            TextButton(
-              child: const Text('TIDAK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 

@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Task extends StatefulWidget {
-  const Task({Key? key}) : super(key: key);
+class ScenarioDetail extends StatefulWidget {
+  final String scenario;
+  const ScenarioDetail({
+    Key? key,
+    required this.scenario,
+  }) : super(key: key);
 
   @override
-  State<Task> createState() => _TaskState();
+  State<ScenarioDetail> createState() => _ScenarioDetailState();
 }
 
-class _TaskState extends State<Task> {
+class _ScenarioDetailState extends State<ScenarioDetail> {
   bool isTemperatureOn = false;
   bool isLDROn = false;
   bool isUltrasonicOn = false;
 
   @override
+  void initState() {
+    super.initState();
+    checkTask();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.grey[200],
         elevation: 0,
@@ -37,27 +48,27 @@ class _TaskState extends State<Task> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.only(
-            top: 30,
-            left: 16,
-            right: 16,
-          ),
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
           child: Column(
             children: [
-              Text(
-                'Melaksanakan Tugas',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 25,
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  widget.scenario,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 25,
+                  ),
                 ),
               ),
               SizedBox(
-                height: 16,
+                height: 30,
               ),
               Text(
-                'On/Off Tugas',
+                'Kondisi',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
@@ -65,6 +76,130 @@ class _TaskState extends State<Task> {
               ),
               SizedBox(
                 height: 20,
+              ),
+              Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: InkWell(
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 30,
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/icon_awesome_fan.svg',
+                          color: Colors.blue,
+                          height: 50,
+                          width: 50,
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          'Suhu ruangan 25°C',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: InkWell(
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 30,
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/icon_material_lightbulb_outline.svg',
+                          color: Colors.blue,
+                          height: 50,
+                          width: 50,
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          'Jika kondisi ruangan gelap',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: InkWell(
+                  onTap: () {},
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 30,
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/person_walking.svg',
+                          color: Colors.blue,
+                          height: 50,
+                          width: 50,
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          'Jika ada pergerakan orang\nmasuk ruangan',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                'Melaksanakan Tugas',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
+                ),
+              ),
+              SizedBox(
+                height: 30,
               ),
               Row(
                 children: [
@@ -81,7 +216,6 @@ class _TaskState extends State<Task> {
                           vertical: 20,
                         ),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,7 +228,11 @@ class _TaskState extends State<Task> {
                                 ),
                                 Switch(
                                   value: isTemperatureOn,
-                                  onChanged: (value) {
+                                  onChanged: (value) async {
+                                    final SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setBool(
+                                        't+${widget.scenario}', value);
                                     setState(() {
                                       isTemperatureOn = value;
                                     });
@@ -111,7 +249,6 @@ class _TaskState extends State<Task> {
                               'Sensor Suhu',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,
                                 color: Colors.black,
                               ),
                             ),
@@ -133,7 +270,6 @@ class _TaskState extends State<Task> {
                           vertical: 20,
                         ),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,7 +282,11 @@ class _TaskState extends State<Task> {
                                 ),
                                 Switch(
                                   value: isLDROn,
-                                  onChanged: (value) {
+                                  onChanged: (value) async {
+                                    final SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.setBool(
+                                        'l+${widget.scenario}', value);
                                     setState(() {
                                       isLDROn = value;
                                     });
@@ -164,7 +304,6 @@ class _TaskState extends State<Task> {
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black,
-                                fontSize: 16,
                               ),
                             ),
                           ],
@@ -206,14 +345,16 @@ class _TaskState extends State<Task> {
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
-                              fontSize: 16,
                             ),
                           ),
                         ],
                       ),
                       Switch(
                         value: isUltrasonicOn,
-                        onChanged: (value) {
+                        onChanged: (value) async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setBool('u+${widget.scenario}', value);
                           setState(() {
                             isUltrasonicOn = value;
                           });
@@ -230,5 +371,13 @@ class _TaskState extends State<Task> {
         ),
       ),
     );
+  }
+
+  Future<void> checkTask() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    isTemperatureOn = prefs.getBool('t+${widget.scenario}') ?? false;
+    isLDROn = prefs.getBool('l+${widget.scenario}') ?? false;
+    isUltrasonicOn = prefs.getBool('u+${widget.scenario}') ?? false;
+    setState(() {});
   }
 }

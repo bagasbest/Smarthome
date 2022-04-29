@@ -81,7 +81,7 @@ class _ConditonalLDRState extends State<ConditonalLDR> {
                           children: [
                             SvgPicture.asset(
                               'assets/icons/icon_material_lightbulb_outline.svg',
-                              color: Colors.black,
+                              color: Colors.blue,
                               height: 50,
                               width: 50,
                             ),
@@ -128,7 +128,7 @@ class _ConditonalLDRState extends State<ConditonalLDR> {
                         Row(
                           children: [
                             SvgPicture.asset(
-                              'assets/icons/icon_material_lightbulb_outline.svg',
+                              'assets/icons/lightbulb_outline.svg',
                               color: Colors.blue,
                               height: 50,
                               width: 50,

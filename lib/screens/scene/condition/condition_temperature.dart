@@ -128,8 +128,8 @@ class _ConditionTemperatureState extends State<ConditionTemperature> {
                         Row(
                           children: [
                             SvgPicture.asset(
-                              'assets/icons/icon_awesome_fan.svg',
-                              color: Colors.blue[100],
+                              'assets/icons/fan_outline.svg',
+                              color: Colors.blue,
                               height: 50,
                               width: 50,
                             ),

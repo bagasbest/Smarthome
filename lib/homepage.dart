@@ -62,7 +62,7 @@ class _HomepageState extends State<Homepage> {
                 Icons.people_outline,
                 color: (_currentIndex == 2) ? Colors.blue : Colors.black,
               ),
-              label: "Pengaturan",
+              label: "Profil",
             ),
           ],
           selectedLabelStyle: TextStyle(

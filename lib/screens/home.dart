@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smarthome/homepage.dart';
+import 'package:smarthome/screens/profile.dart';
 import 'package:smarthome/utils/drawer.dart';
 import 'package:smarthome/utils/grid_view.dart';
 
@@ -74,14 +76,21 @@ class _HomeState extends State<Home> {
             width: 16,
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 16,
-            ),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://images.unsplash.com/photo-1577880216142-8549e9488dad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
-            ),
-          ),
+              padding: const EdgeInsets.only(
+                top: 16,
+              ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Profile()),
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      'https://images.unsplash.com/photo-1577880216142-8549e9488dad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
+                ),
+              )),
           SizedBox(
             width: 10,
           ),
@@ -298,12 +307,42 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 20,
               ),
-              Text(
-                'SKENARIO',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'SKENARIO',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Delete All',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          _showConfirmDeleteDialog();
+                        },
+                        child: SvgPicture.asset(
+                          'assets/icons/delete.svg',
+                          color: Colors.blue,
+                          height: 20,
+                          width: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               SizedBox(
                 height: 20,
@@ -327,6 +366,57 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showConfirmDeleteDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Konfirmasi Menghapus Skenario'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Apakah anda yakin ingin menghapus seluruh skenario ?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('YA'),
+              onPressed: () async {
+                SharedPreferences pref = await SharedPreferences.getInstance();
+                await pref.clear();
+                Navigator.of(context).pop();
+
+                final snackBar = SnackBar(
+                  content: const Text('Sukses menghapus skenario'),
+                  action: SnackBarAction(
+                    label: 'Oke',
+                    onPressed: () {
+                      // Some code to undo the change.
+                    },
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                setState(() {});
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => Homepage()),
+                );
+              },
+            ),
+            TextButton(
+              child: const Text('TIDAK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
